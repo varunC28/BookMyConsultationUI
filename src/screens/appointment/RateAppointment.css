@@ -1,0 +1,25 @@
+/* RateAppointment.css */
+
+/* Style for the rate appointment modal */
+.rate-appointment-modal {
+    padding: 20px;
+}
+
+/* Style for the card header in the rate appointment modal */
+.card-header {
+    background-color: purple;
+    height: 70px;
+    padding: 11px;
+    color: white;
+}
+
+/* Style for the comment input field */
+.comment-field {
+    margin-top: 10px;
+}
+
+/* Style for the rating warning message */
+.rating-warning {
+    color: red;
+    margin-top: 10px;
+}

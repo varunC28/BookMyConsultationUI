@@ -1,0 +1,31 @@
+/* DoctorList.css */
+
+/* Paper component styles */
+.paper {
+    margin: 15px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: left;
+  }
+  
+  /* Typography for doctor name and details */
+  .typography-name {
+    font-weight: bold;
+  }
+  
+  .typography-details {
+    margin: 5px 0;
+  }
+  
+  /* Button styles */
+  .book-button {
+    width: 40%;
+    margin-right: 10px;
+  }
+  
+  .view-details-button {
+    width: 40%;
+    background-color: green;
+    color: white;
+  }
+  

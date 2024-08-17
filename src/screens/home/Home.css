@@ -1,0 +1,27 @@
+/* Home.css */
+
+.MuiTabs-root {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .MuiTab-root {
+    min-width: 120px;
+  }
+  
+  .doctor-list, .appointment-list {
+    margin-top: 16px;
+  }
+  
+  .doctor-item, .appointment-item {
+    margin-bottom: 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .button-group .MuiButton-root {
+    margin: 0;
+  }
+  

@@ -1,0 +1,21 @@
+/* BookAppointment.css */
+
+/* Modal header styles */
+.card-header {
+    background-color: purple;
+    height: 70px;
+    padding: 11px;
+    color: white;
+  }
+  
+  /* Form control styles */
+  .form-control {
+    margin: 20px 0;
+  }
+  
+  /* Error message styles */
+  .error-text {
+    color: red;
+    margin-top: 5px;
+  }
+  

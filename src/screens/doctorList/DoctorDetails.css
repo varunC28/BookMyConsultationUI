@@ -1,0 +1,15 @@
+/* DoctorDetails.css */
+
+/* Modal header styles */
+.card-header {
+    background-color: purple;
+    height: 70px;
+    padding: 11px;
+    color: white;
+  }
+  
+  /* Typography for doctor details */
+  .details-typography {
+    margin-bottom: 10px;
+  }
+  

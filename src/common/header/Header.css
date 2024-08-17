@@ -1,0 +1,32 @@
+/* header.css */
+.header {
+    background-color: purple;
+    height: 70px;
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    background-color: #ff7f7f;
+    height: 35px;
+    width: 35px; /* Assuming a square logo */
+    margin-right: 10px;
+}
+
+.app-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}

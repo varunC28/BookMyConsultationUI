@@ -1,0 +1,17 @@
+.register-container {
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+}
+
+.register-container .MuiFormControl-root {
+    margin-bottom: 16px;
+}
+
+.register-container .MuiTypography-h6 {
+    margin-bottom: 16px;
+}
+
+.register-container .MuiButton-root {
+    margin-top: 20px;
+}

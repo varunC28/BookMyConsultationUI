@@ -1,0 +1,34 @@
+/* Appointment.css */
+
+/* Style for the appointment list container */
+.appointment-container {
+    padding: 20px;
+}
+
+/* Style for individual appointment items */
+.appointment-item {
+    margin: 15px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+/* Style for the paper component in the appointment list */
+.paper-appointment {
+    text-align: left;
+    margin: 15px;
+    padding: 20px;
+    cursor: pointer;
+}
+
+/* Style for the card header in the rate appointment modal */
+.card-header {
+    background-color: purple;
+    height: 70px;
+    padding: 11px;
+    color: white;
+}
+
+/* Style for the rate appointment button */
+.rate-button {
+    margin-top: 20px;
+}
