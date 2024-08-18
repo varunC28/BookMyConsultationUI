@@ -13,9 +13,9 @@ const Controller = () => {
     <Router>
       <div className="main-container">
         <Header/>
-        <Home/>
         <Routes>
-                {/* <Route path="/login" element={<Login />} /> */}
+                <Route path="/" element={<Home/>} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 {/* <Route path="/bookappointment" element={<BookAppointment />} /> */}
         </Routes>

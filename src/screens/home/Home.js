@@ -1,44 +1,21 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Typography, Box, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import DoctorList from '../doctorList/DoctorList'; 
 
 const Home = () => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [selectedFilter, setSelectedFilter] = useState('');
 
   const handleTabChange = (event, newValue) => {
     setTabIndex(newValue);
   };
 
-  const handleFilterChange = (event) => {
-    setSelectedFilter(event.target.value);
-  };
 
   const renderDoctorsTab = () => (
     <div>
-      <Typography variant="h6" gutterBottom>Doctors</Typography>
       <FormControl fullWidth margin="normal">
-        <InputLabel>Filter by Speciality</InputLabel>
-        <Select
-          value={selectedFilter}
-          onChange={handleFilterChange}
-          label="Filter by Specialty"
-        >
-          <MenuItem value="">None</MenuItem>
-          <MenuItem value="cardiology">Cardiology</MenuItem>
-          <MenuItem value="neurology">Neurology</MenuItem>
-          <MenuItem value="orthopedics">Orthopedics</MenuItem>
-          {/* Add more specialties */}
-        </Select>
       </FormControl>
-      {/* Example doctor list */}
-      <div>
-        <Typography variant="body1">Dr. John Doe</Typography>
-        <Typography variant="body1">Speciality: </Typography>
-        <Typography variant="body1">Rating: </Typography>
-        <Button variant="contained" color="primary">BOOK APPOINTMENT</Button>
-        <Button variant="outlined" color="secondary">VIEW DETAILS</Button>
-      </div>
-      {/* Add more doctors */}
+      <DoctorList />
     </div>
   );
 

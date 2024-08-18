@@ -5,11 +5,16 @@ import Modal from 'react-modal';
 import { Tabs, Tab, Card, CardContent, Typography } from '@mui/material';
 import Login from '../../screens/login/Login';
 import './Header.css';
+import logo from '/Users/varunchaturvedi/Downloads/Projects/BookMyConsultationUI/src/assets/logo.jpeg';
+import { useNavigate } from 'react-router-dom';
+
 
 const Header = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const navigate = useNavigate();
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -32,15 +37,21 @@ const Header = () => {
         setIsLoggedIn(false);
     };
 
+    const handleLoginClick = () => {
+        navigate('/login'); // Redirect to the Register page
+    };
+
     return (
         <div className="header">
             <div className="header-left">
-                <div className="logo"></div>
+                <div className="logo">
+                <img src={logo} alt="Logo" style={{ width: '35px', height: '35px' }} />
+                </div>
                 <span className="app-name">Doctor Finder</span>
             </div>
             <div className="header-right">
                 {!isLoggedIn ? (
-                    <Button variant="contained" color="primary" onClick={openModal}>
+                    <Button variant="contained" color="primary" onClick={handleLoginClick}>
                         Login
                     </Button>
                 ) : (
