@@ -4,12 +4,12 @@ import axios from 'axios';
 import './Register.css'; // Assuming you have a CSS file for styling
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({ onRegisterSuccess }) => {
+const Register = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+    const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
-    const [contactNumber, setContactNumber] = useState('');
+    const [mobile, setMobile] = useState('');
     const [firstNameError, setFirstNameError] = useState('');
     const [lastNameError, setLastNameError] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -25,9 +25,9 @@ const Register = ({ onRegisterSuccess }) => {
         return emailPattern.test(email);
     };
 
-    const validateContactNumber = (contactNumber) => {
+    const validateContactNumber = (mobile) => {
         const contactPattern = /^[0-9]{10}$/; // Assuming a 10-digit number
-        return contactPattern.test(contactNumber);
+        return contactPattern.test(mobile);
     };
 
     const handleRegister = async () => {
@@ -47,10 +47,10 @@ const Register = ({ onRegisterSuccess }) => {
             setLastNameError('');
         }
 
-        if (!email) {
+        if (!emailId) {
             setEmailError('Please fill out this field');
             isValid = false;
-        } else if (!validateEmail(email)) {
+        } else if (!validateEmail(emailId)) {
             setEmailError('Enter valid Email');
             isValid = false;
         } else {
@@ -64,10 +64,10 @@ const Register = ({ onRegisterSuccess }) => {
             setPasswordError('');
         }
 
-        if (!contactNumber) {
+        if (!mobile) {
             setContactNumberError('Please fill out this field');
             isValid = false;
-        } else if (!validateContactNumber(contactNumber)) {
+        } else if (!validateContactNumber(mobile)) {
             setContactNumberError('Enter valid mobile number');
             isValid = false;
         } else {
@@ -76,13 +76,13 @@ const Register = ({ onRegisterSuccess }) => {
 
         if (isValid) {
             try {
-                const response = await axios.post('/users/register', { firstName, lastName, email, password, contactNumber });
+                const response = await axios.post('/users/register', { firstName, lastName, emailId, password, mobile });
                 if (response.status === 200) {
                     setSuccessMessage('Registration Successful');
                     setRegisterError('');
-                    onRegisterSuccess();
                 }
             } catch (error) {
+                console.log(error);
                 setRegisterError('Registration failed');
             }
         }
@@ -118,8 +118,8 @@ const Register = ({ onRegisterSuccess }) => {
             <FormControl fullWidth margin="normal" error={!!emailError}>
                 <InputLabel>Email</InputLabel>
                 <Input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={emailId}
+                    onChange={(e) => setEmailId(e.target.value)}
                     onFocus={() => setEmailError('')}
                 />
                 <FormHelperText>{emailError}</FormHelperText>
@@ -137,8 +137,8 @@ const Register = ({ onRegisterSuccess }) => {
             <FormControl fullWidth margin="normal" error={!!contactNumberError}>
                 <InputLabel>Contact Number</InputLabel>
                 <Input
-                    value={contactNumber}
-                    onChange={(e) => setContactNumber(e.target.value)}
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
                     onFocus={() => setContactNumberError('')}
                 />
                 <FormHelperText>{contactNumberError}</FormHelperText>

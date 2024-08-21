@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../login/Login.css';
 
-const Login = ({ onLoginSuccess }) => {
-    const [email, setEmail] = useState('');
+const Login = () => {
+    const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
@@ -13,17 +13,17 @@ const Login = ({ onLoginSuccess }) => {
 
     const navigate = useNavigate();
 
-    const validateEmail = (email) => {
+    const validateEmail = (emailId) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(email);
+        return emailPattern.test(emailId);
     };
 
     const handleLogin = async () => {
         let isValid = true;
-        if (!email) {
+        if (!emailId) {
             setEmailError('Please fill out this field');
             isValid = false;
-        } else if (!validateEmail(email)) {
+        } else if (!validateEmail(emailId)) {
             setEmailError('Enter valid Email');
             isValid = false;
         } else {
@@ -39,15 +39,25 @@ const Login = ({ onLoginSuccess }) => {
 
         if (isValid) {
             try {
-                const response = await axios.post('/auth/login', { email, password });
+                const token = btoa(`${emailId}:${password}`);
+                const response = await axios.post('/auth/login', {}, {
+                    headers: {
+                        'Authorization': `Basic ${token}`
+                    }
+                });
+        
                 if (response.status === 200) {
                     setLoginError('');
-                    onLoginSuccess();
+                    const accessToken = response.data.accessToken; 
+                    localStorage.setItem('BEARER_TOKEN', accessToken);
+                    navigate('/');
                 }
             } catch (error) {
                 setLoginError('Invalid email or password');
             }
         }
+        
+        
     };
 
     const handleRegisterClick = () => {
@@ -61,8 +71,8 @@ const Login = ({ onLoginSuccess }) => {
             <FormControl fullWidth margin="normal" error={!!emailError}>
                 <InputLabel>Email</InputLabel>
                 <Input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={emailId}
+                    onChange={(e) => setEmailId(e.target.value)}
                     onFocus={() => setEmailError('')}
                 />
                 <FormHelperText>{emailError}</FormHelperText>

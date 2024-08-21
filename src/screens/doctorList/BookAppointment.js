@@ -4,7 +4,7 @@
 // import DateFnsUtils from '@date-io/date-fns';
 // import { useNavigate } from 'react-router-dom';
 // import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-// // import { DatePicker } from '@mui/lab';
+// import { DatePicker } from '@mui/lab';
 
 
 
@@ -23,14 +23,12 @@
 //       return;
 //     }
 //     // Add booking logic here
+//     navigate('/bookappointment');
 //     onClose();
 //   };
 
 //   const navigate = useNavigate();
 
-//   const handleBookAppointment = () => {
-//     navigate('/bookappointment'); // Redirect to the Login page
-// };
 
 //   return (
 //     <Dialog open={open} onClose={onClose}>
