@@ -5,7 +5,7 @@ import Header from "../common/header/Header";
 import Login from "./login/Login";
 import Register from "./register/Register";
 import BookAppointment from "./doctorList/BookAppointment";
-
+import DoctorDetails from "./doctorList/DoctorDetails";
 
 const Controller = () => {
   const baseUrl = "/api/v1/";
@@ -14,12 +14,12 @@ const Controller = () => {
       <div className="main-container">
         <Header/>
         <Routes>
-                <Route path="/" element={<Home/>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                {/* <Route path="/bookappointment" element={<BookAppointment />} /> */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/bookappointment" element={<BookAppointment />} />
+          <Route path="/doctordetails" element={<DoctorDetails />} />
         </Routes>
-
       </div>
     </Router>
   );

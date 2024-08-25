@@ -48,16 +48,17 @@ const Login = () => {
         
                 if (response.status === 200) {
                     setLoginError('');
-                    const accessToken = response.data.accessToken; 
+                    const { accessToken, user } = response.data; // Assuming the user info is in response.data
+        
                     localStorage.setItem('BEARER_TOKEN', accessToken);
+                    localStorage.setItem('USER_INFO', JSON.stringify(user)); // Store user info
+                    console.log(user);
                     navigate('/');
                 }
             } catch (error) {
                 setLoginError('Invalid email or password');
             }
         }
-        
-        
     };
 
     const handleRegisterClick = () => {
