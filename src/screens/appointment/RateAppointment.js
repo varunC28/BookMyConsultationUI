@@ -1,9 +1,9 @@
-// RateAppointment.js
 import React, { useState } from 'react';
 import { Modal, Paper, Typography, TextField, Button, Rating, FormControl } from '@mui/material';
 import './RateAppointment.css';
+import axios from 'axios';
 
-const RateAppointment = ({ open, onClose, onSubmit }) => {
+const RateAppointment = ({ open, onClose, onSubmit, doctorId, appointmentId }) => {
     const [rating, setRating] = useState(null);
     const [comments, setComments] = useState('');
     const [ratingError, setRatingError] = useState('');
@@ -14,8 +14,33 @@ const RateAppointment = ({ open, onClose, onSubmit }) => {
             return;
         }
         setRatingError('');
-        onSubmit({ rating, comments });
+        submitRating({ rating, comments, doctorId, appointmentId }); // Pass the necessary arguments
+        onSubmit({ rating, comments, doctorId, appointmentId }); // Include doctorId and appointmentId
         onClose();
+    };
+
+    const submitRating = async ({ rating, comments, doctorId, appointmentId }) => {
+        const token = localStorage.getItem('BEARER_TOKEN');
+    
+        try {
+            const response = await axios.post(
+                'http://localhost:8080/ratings',
+                {
+                    rating,
+                    comments,
+                    doctorId,
+                    appointmentId
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            console.log('Rating submitted successfully:', response.data);
+        } catch (error) {
+            console.error('Error submitting rating:', error);
+        }
     };
 
     return (

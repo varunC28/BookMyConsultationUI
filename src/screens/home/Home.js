@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tabs, Tab, Typography, Box, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import DoctorList from '../doctorList/DoctorList'; 
+import Appointment from '../appointment/Appointment';
 
 const Home = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -21,13 +22,9 @@ const Home = () => {
 
   const renderAppointmentsTab = () => (
     <div>
-      <Typography variant="h6" gutterBottom>Appointments</Typography>
-      {/* Example appointment list */}
-      <div>
-        <Typography variant="body1">Appointment with Dr. John Doe</Typography>
-        <Button variant="contained" color="primary">RATE APPOINTMENT</Button>
-      </div>
-      {/* Add more appointments */}
+      <FormControl fullWidth margin="normal">
+      </FormControl>
+      <Appointment/>
     </div>
   );
 

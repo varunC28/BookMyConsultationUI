@@ -5,15 +5,21 @@ import Modal from 'react-modal';
 import { Tabs, Tab, Card, CardContent, Typography } from '@mui/material';
 import Login from '../../screens/login/Login';
 import './Header.css';
-import logo from '/Users/varunchaturvedi/Downloads/Projects/BookMyConsultationUI/src/assets/logo.jpeg';
+import logo from '../../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from "../../contexts/AuthContext"
+import axios from 'axios';
 
 const Header = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+    //const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {
+        isLoggedIn,
+        setIsLoggedIn,
+        
+      } = useAuth()
+    console.log(isLoggedIn);
     const navigate = useNavigate();
 
     const openModal = () => {
@@ -30,13 +36,29 @@ const Header = () => {
 
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
-        closeModal();
+        //closeModal();
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+
+        
+        const token = localStorage.getItem('BEARER_TOKEN'); // Get token from local storage
+        if (!token) {
+            //setBookingError('User not authenticated');
+            console.log('Error: No authentication token found');
+            return;
+        }
+  
+  
+          const response = await axios.post('http://localhost:8080/auth/logout', {}, {
+            headers: {
+                'Authorization': `Bearer ${token}` // Use the token in the request header
+            }
+        });
+        localStorage.clear();
         setIsLoggedIn(false);
     };
-
+    
     const handleLoginClick = () => {
         navigate('/login'); // Redirect to the Register page
     };

@@ -17,7 +17,6 @@ const BookAppointment = () => {
   const location = useLocation();
   const { doctor } = location.state || {}; // Destructure the doctor from state
 
-  const user = JSON.parse(localStorage.getItem('USER_INFO'));
 
 
   if (!doctor) {
@@ -63,9 +62,9 @@ const BookAppointment = () => {
       const appointmentData = {
         doctorId: doctor.id, // Adjust based on how doctor ID is stored
         doctorName: `${doctor.firstName} ${doctor.lastName}`,
-        userId: user.userEmailId,
-        userName: user.userName,
-        userEmailId: user.userEmailId,
+        userId: user.id,
+        userName: `${user.firstName} ${user.lastName}` ,
+        userEmailId: user.emailAddress,
         timeSlot: timeSlot,
         appointmentDate: date.toISOString().split('T')[0], // Format date
         symptoms: symptoms,
