@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from '@mui/material/Button';
 import Modal from 'react-modal';
 import { Tabs, Tab, Card, CardContent } from '@mui/material';
@@ -9,21 +9,42 @@ import logo from '../../assets/logo.jpeg';
 import { useAuth } from "../../contexts/AuthContext";
 import axios from 'axios';
 
+// Set the app element for accessibility
+Modal.setAppElement('#root'); // Make sure you have an element with id 'root' in your index.html
+
 const Header = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [tabValue, setTabValue] = useState(0);
+    const [modalIsOpen, setIsOpen] = useState(false);
     const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const subtitle = useRef(null);
+
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            border: 'none',
+            borderRadius: '8px',
+            padding: '0px', // No extra padding to avoid extra box
+        },
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        }
+    };
 
     useEffect(() => {
-        document.body.classList.toggle('blurred', isModalOpen);
-    }, [isModalOpen]);
+        document.body.classList.toggle('blurred', modalIsOpen);
+    }, [modalIsOpen]);
 
     const openModal = () => {
-        setIsModalOpen(true);
+        setIsOpen(true);
     };
 
     const closeModal = () => {
-        setIsModalOpen(false);
+        setIsOpen(false);
     };
 
     const handleTabChange = (event, newValue) => {
@@ -33,6 +54,12 @@ const Header = () => {
     const handleLoginSuccess = () => {
         setIsLoggedIn(true);
         closeModal();
+    };
+
+    const afterOpenModal = () => {
+        if (subtitle.current) {
+            subtitle.current.style.color = '#f00';
+        }
     };
 
     const handleLogout = async () => {
@@ -67,18 +94,18 @@ const Header = () => {
             </div>
 
             <Modal
-                isOpen={isModalOpen}
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
-                className="modal"
-                overlayClassName="overlay"
-                ariaHideApp={false}
+                style={customStyles}
+                contentLabel="Login and Register Modal"
             >
-                <Card>
+                <Card sx={{ boxShadow: 'none', borderRadius: '8px' }}>
                     <Tabs value={tabValue} onChange={handleTabChange} centered>
                         <Tab label="LOGIN" />
                         <Tab label="REGISTER" />
                     </Tabs>
-                    <CardContent>
+                    <CardContent sx={{ padding: '16px' }}>
                         {tabValue === 0 && <Login onLoginSuccess={handleLoginSuccess} />}
                         {tabValue === 1 && <Register />}
                     </CardContent>

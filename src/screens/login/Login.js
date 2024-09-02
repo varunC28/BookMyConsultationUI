@@ -1,19 +1,16 @@
-// Login.js
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, FormHelperText, Typography } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../contexts/AuthContext";
 import '../login/Login.css';
 
-const Login = ({ onLoginSuccess }) => {  // Add onLoginSuccess as a prop
+const Login = ({ onLoginSuccess }) => {  
     const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [loginError, setLoginError] = useState('');
     const { setIsLoggedIn } = useAuth();
-    const navigate = useNavigate();
 
     const validateEmail = (emailId) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
