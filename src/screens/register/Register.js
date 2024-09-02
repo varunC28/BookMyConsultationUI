@@ -1,10 +1,11 @@
+// Register.js
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, FormHelperText, Typography } from '@mui/material';
 import axios from 'axios';
-import './Register.css'; // Assuming you have a CSS file for styling
 import { useNavigate } from 'react-router-dom';
+import './Register.css';
 
-const Register = () => {
+const Register = ({ onRegisterSuccess }) => {  // Add onRegisterSuccess as a prop
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [emailId, setEmailId] = useState('');
@@ -26,7 +27,7 @@ const Register = () => {
     };
 
     const validateContactNumber = (mobile) => {
-        const contactPattern = /^[0-9]{10}$/; // Assuming a 10-digit number
+        const contactPattern = /^[0-9]{10}$/; 
         return contactPattern.test(mobile);
     };
 
@@ -79,24 +80,16 @@ const Register = () => {
                 const response = await axios.post('/users/register', { firstName, lastName, emailId, password, mobile });
                 if (response.status === 200) {
                     setSuccessMessage('Registration Successful');
-                    setRegisterError('');
+                    onRegisterSuccess();  // Call the prop function
                 }
             } catch (error) {
-                console.log(error);
                 setRegisterError('Registration failed');
             }
         }
     };
 
-
-    const handleLoginClick = () => {
-        navigate('/login'); // Redirect to the Login page
-    };
-
     return (
         <div className="register-container">
-            <Button variant="h6" onClick={handleLoginClick}>Login</Button>
-            <Button variant="h6">Register</Button>
             <FormControl fullWidth margin="normal" error={!!firstNameError}>
                 <InputLabel>First Name</InputLabel>
                 <Input

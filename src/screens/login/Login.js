@@ -1,28 +1,20 @@
-import React, { useState ,useEffect} from 'react';
+// Login.js
+import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, FormHelperText, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext";
 import '../login/Login.css';
-import { set } from 'date-fns';
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {  // Add onLoginSuccess as a prop
     const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [loginError, setLoginError] = useState('');
-    const {
-        isLoggedIn,
-        setIsLoggedIn,
-        
-      } = useAuth()
-
+    const { setIsLoggedIn } = useAuth();
     const navigate = useNavigate();
-    useEffect(() => {
-        setIsLoggedIn(false);
-        localStorage.clear();
-      }, []);
+
     const validateEmail = (emailId) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailPattern.test(emailId);
@@ -55,44 +47,21 @@ const Login = () => {
                         'Authorization': `Basic ${token}`
                     }
                 });
-        
+
                 if (response.status === 200) {
-                    setLoginError('');
-                    const { id, firstName, lastName, emailAddress, mobilePhoneNumber, accessToken } = response.data; // Assuming the user info is in response.data
-                    const user = {
-                        id,
-                        firstName,
-                        lastName,
-                        emailAddress,
-                        mobilePhoneNumber,
-                      };
-                      
+                    const { accessToken } = response.data;
                     localStorage.setItem('BEARER_TOKEN', accessToken);
-                    localStorage.setItem('USER_INFO', JSON.stringify(user)); // Store user info
-                    localStorage.setItem('USER_LOGGED_IN', "true"); // Store user info
-                    console.log(user);
-                    console.log("localstorage",localStorage.getItem('USER_LOGGED_IN'));
-                    console.log("logged in");
                     setIsLoggedIn(true);
-                    console.log(isLoggedIn);
-                    navigate('/');
-                    
+                    onLoginSuccess();  // Call the prop function
                 }
             } catch (error) {
-                console.log(error);
                 setLoginError('Invalid email or password');
             }
         }
     };
 
-    const handleRegisterClick = () => {
-        navigate('/register'); // Redirect to the Register page
-    };
-
     return (
         <div className="login-container">
-            <Button variant="h6">Login</Button>
-            <Button variant="h6" onClick={handleRegisterClick}>Register</Button>
             <FormControl fullWidth margin="normal" error={!!emailError}>
                 <InputLabel>Email</InputLabel>
                 <Input

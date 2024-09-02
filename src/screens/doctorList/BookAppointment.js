@@ -3,21 +3,15 @@ import { TextField, Button, Typography, FormControl, InputLabel, Select, MenuIte
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const BookAppointment = () => {
+const BookAppointment = ({ doctor }) => {
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState('');
   const [medicalHistory, setMedicalHistory] = useState('');
   const [symptoms, setSymptoms] = useState('');
   const [timeSlotError, setTimeSlotError] = useState('');
   const [bookingError, setBookingError] = useState('');
-
-  const location = useLocation();
-  const { doctor } = location.state || {}; // Destructure the doctor from state
-
-
 
   if (!doctor) {
     return <Typography variant="h6">No doctor details available.</Typography>;
@@ -26,76 +20,65 @@ const BookAppointment = () => {
   const handleDateChange = (newValue) => setDate(newValue);
 
   const handleBookAppointment = async () => {
-    // Log the current state of variables
-    console.log('Time Slot:', timeSlot);
-    console.log('Date:', date);
-    console.log('Medical History:', medicalHistory);
-    console.log('Symptoms:', symptoms);
-  
     if (!timeSlot) {
       setTimeSlotError('Select a time slot');
-      console.log('Error: No time slot selected');
       return;
     }
-  
-    const token = localStorage.getItem('BEARER_TOKEN'); // Get token from local storage
+
+    const token = localStorage.getItem('BEARER_TOKEN');
     if (!token) {
       setBookingError('User not authenticated');
-      console.log('Error: No authentication token found');
       return;
     }
-  
-    console.log('Token:', token);
-  
-    // Retrieve user info from local storage
+
     const user = JSON.parse(localStorage.getItem('USER_INFO'));
     if (!user) {
       setBookingError('User info not available');
-      console.log('Error: No user info found');
       return;
     }
-  
-    console.log('User Info:', user);
-  
+
     try {
-      // Log the data to be sent in the request
       const appointmentData = {
-        doctorId: doctor.id, // Adjust based on how doctor ID is stored
+        doctorId: doctor.id,
         doctorName: `${doctor.firstName} ${doctor.lastName}`,
         userId: user.id,
-        userName: `${user.firstName} ${user.lastName}` ,
+        userName: `${user.firstName} ${user.lastName}`,
         userEmailId: user.emailAddress,
         timeSlot: timeSlot,
-        appointmentDate: date.toISOString().split('T')[0], // Format date
+        appointmentDate: date.toISOString().split('T')[0],
         symptoms: symptoms,
         priorMedicalHistory: medicalHistory
       };
-      console.log('Appointment Data:', appointmentData);
-  
+
       const response = await axios.post('http://localhost:8080/appointments', appointmentData, {
         headers: {
-          'Authorization': `Bearer ${token}` // Use the token in the request header
+          'Authorization': `Bearer ${token}`
         }
       });
-  
-      console.log('Response:', response);
-  
+
       if (response.status === 200) {
-        // Handle successful booking
         setBookingError('');
         alert('Appointment booked successfully!');
       }
     } catch (error) {
-      console.error('Error while booking appointment:', error);
       setBookingError('Failed to book appointment. Please try again.');
     }
   };
-  
 
   return (
     <div style={{ padding: '20px' }}>
-      <Typography variant="h4">Book an Appointment</Typography>
-      <Typography variant="h6">Name: {doctor.firstName} {doctor.lastName}</Typography>
+      
+      <Typography
+  variant="h6"
+  style={{
+    pointerEvents: 'none', // Prevents interaction
+    opacity: 0.6,         // Makes it look disabled (optional)
+  }}
+>
+  <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>DoctorName*</span><br />
+  {doctor.firstName} {doctor.lastName}
+</Typography>
+
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
           label="Date"
@@ -120,7 +103,6 @@ const BookAppointment = () => {
           <MenuItem value="06PM-07PM">06PM-07PM</MenuItem>
           <MenuItem value="07PM-08PM">07PM-08PM</MenuItem>
           <MenuItem value="08PM-09PM">08PM-09PM</MenuItem>
-
         </Select>
         {timeSlotError && <Typography color="error">{timeSlotError}</Typography>}
       </FormControl>
