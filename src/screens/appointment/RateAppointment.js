@@ -14,8 +14,8 @@ const RateAppointment = ({ open, onClose, onSubmit, doctorId, appointmentId }) =
             return;
         }
         setRatingError('');
-        submitRating({ rating, comments, doctorId, appointmentId }); // Pass the necessary arguments
-        onSubmit({ rating, comments, doctorId, appointmentId }); // Include doctorId and appointmentId
+        submitRating({ rating, comments, doctorId, appointmentId });
+        onSubmit({ rating, comments, doctorId, appointmentId });
         onClose();
     };
 

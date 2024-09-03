@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Typography, Button } from '@mui/material';
+import { Paper, Typography, Button, Modal } from '@mui/material'; // Use Modal from Material-UI
 import './Appointment.css';
 import axios from 'axios';
 import RateAppointment from './RateAppointment';
@@ -9,6 +9,17 @@ const Appointment = () => {
   const [error, setError] = useState(null);
   const [isRateModalOpen, setIsRateModalOpen] = useState(false);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -62,10 +73,18 @@ const Appointment = () => {
       ) : (
         appointments.map((appointment, index) => (
           <Paper key={index} className="paper-appointment">
-            <Typography variant="h6">Doctor: {appointment.doctorName}</Typography>
+            <Typography variant="h6">Dr: {appointment.doctorName}</Typography>
             <Typography variant="body1">Date: {appointment.appointmentDate}</Typography>
             {appointment.symptoms && <Typography variant="body1">Symptoms: {appointment.symptoms}</Typography>}
-            {appointment.priorMedicalHistory && <Typography variant="body1">Medical History: {appointment.priorMedicalHistory}</Typography>}
+            {appointment.priorMedicalHistory && (
+              <Typography 
+                variant="body1" 
+                className="medical-history" 
+                style={{ marginBottom: "8px" }}
+              >
+                Medical History: {appointment.priorMedicalHistory}
+              </Typography>
+            )}
             <Button
               variant="contained"
               color="primary"
@@ -79,15 +98,20 @@ const Appointment = () => {
       )}
 
       {/* Render the RateAppointment modal */}
-      {selectedAppointment && (
+      <Modal
+        open={isRateModalOpen}
+        onClose={() => setIsRateModalOpen(false)}
+        aria-labelledby="rate-appointment-modal"
+        aria-describedby="rate-appointment-form"
+      >
         <RateAppointment
           open={isRateModalOpen}
           onClose={() => setIsRateModalOpen(false)}
           onSubmit={handleRateSubmit}
-          doctorId={selectedAppointment.doctorId} // Passing doctorId
-          appointmentId={selectedAppointment.appointmentId}  // Passing appointmentId
+          doctorId={selectedAppointment?.doctorId} // Passing doctorId
+          appointmentId={selectedAppointment?.appointmentId}  // Passing appointmentId
         />
-      )}
+      </Modal>
     </div>
   );
 };

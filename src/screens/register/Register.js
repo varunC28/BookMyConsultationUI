@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button, FormHelperText, Typography } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
 const Register = ({ onRegisterSuccess }) => {  // Add onRegisterSuccess as a prop
@@ -18,8 +17,6 @@ const Register = ({ onRegisterSuccess }) => {  // Add onRegisterSuccess as a pro
     const [contactNumberError, setContactNumberError] = useState('');
     const [registerError, setRegisterError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
-    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -23,3 +23,13 @@
     color: red;
     margin-top: 10px;
 }
+
+.rate-appointment-modal {
+    width: 90%; /* Set width to 90% of the screen width */
+    max-width: 400px; /* Set a maximum width to limit the modal's size */
+    margin: auto; /* Center the modal horizontally */
+    padding: 20px; /* Add padding for internal spacing */
+    position: relative; /* Required for centered alignment */
+    top: 50%; /* Position the modal in the center vertically */
+    transform: translateY(-50%); /* Align the modal vertically to the center */
+}

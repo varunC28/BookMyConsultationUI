@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Paper, Typography, Button, Select, MenuItem, FormControl, InputLabel, CircularProgress, Alert, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import './DoctorList.css';
 import DoctorDetails from './DoctorDetails';
 import BookAppointment from './BookAppointment';

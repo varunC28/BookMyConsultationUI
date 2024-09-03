@@ -18,10 +18,7 @@ const Controller = () => {
         <Header/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/bookappointment" element={<BookAppointment />} />
-          <Route path="/doctordetails" element={<DoctorDetails />} />
           <Route path="/appointments" element={<Appointment />} />
           <Route path="/rateappointment" element={<RateAppointment/>} />
         </Routes>

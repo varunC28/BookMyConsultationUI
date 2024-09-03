@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Typography, Box, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import DoctorList from '../doctorList/DoctorList'; 
 import Appointment from '../appointment/Appointment';
 

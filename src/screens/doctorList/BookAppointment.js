@@ -32,6 +32,7 @@ const BookAppointment = ({ doctor }) => {
     }
 
     const user = JSON.parse(localStorage.getItem('USER_INFO'));
+    console.log('Retrieved user info:', user);
     if (!user) {
       setBookingError('User info not available');
       return;
@@ -47,13 +48,13 @@ const BookAppointment = ({ doctor }) => {
         timeSlot: timeSlot,
         appointmentDate: date.toISOString().split('T')[0],
         symptoms: symptoms,
-        priorMedicalHistory: medicalHistory
+        priorMedicalHistory: medicalHistory,
       };
 
       const response = await axios.post('http://localhost:8080/appointments', appointmentData, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.status === 200) {
@@ -61,23 +62,24 @@ const BookAppointment = ({ doctor }) => {
         alert('Appointment booked successfully!');
       }
     } catch (error) {
+      console.error('Booking error:', error);
       setBookingError('Failed to book appointment. Please try again.');
     }
   };
 
   return (
     <div style={{ padding: '20px' }}>
-      
       <Typography
-  variant="h6"
-  style={{
-    pointerEvents: 'none', // Prevents interaction
-    opacity: 0.6,         // Makes it look disabled (optional)
-  }}
->
-  <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>DoctorName*</span><br />
-  {doctor.firstName} {doctor.lastName}
-</Typography>
+        variant="h6"
+        style={{
+          pointerEvents: 'none', // Prevents interaction
+          opacity: 0.6, // Makes it look disabled (optional)
+        }}
+      >
+        <span style={{ fontSize: '0.8rem', fontWeight: 'normal' }}>Doctor Name*</span>
+        <br />
+        {doctor.firstName} {doctor.lastName}
+      </Typography>
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DatePicker
@@ -128,6 +130,7 @@ const BookAppointment = ({ doctor }) => {
       >
         BOOK APPOINTMENT
       </Button>
+      {bookingError && <Typography color="error" style={{ marginTop: 20 }}>{bookingError}</Typography>}
     </div>
   );
 };
